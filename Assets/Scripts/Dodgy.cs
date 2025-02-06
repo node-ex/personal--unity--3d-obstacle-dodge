@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Dodgy : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float thresholdYPositionForLevelReset = -10f;
 
     void Start()
     {
@@ -12,6 +14,7 @@ public class Dodgy : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        ResetLevel();
     }
 
     void PrintInstructions()
@@ -28,5 +31,13 @@ public class Dodgy : MonoBehaviour
         float translateYValue = 0f;
         float translateZValue = moveSpeed * verticalAxisValue * Time.deltaTime;
         transform.Translate(translateXValue, translateYValue, translateZValue);
+    }
+
+    void ResetLevel()
+    {
+        if (transform.position.y < thresholdYPositionForLevelReset)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }
